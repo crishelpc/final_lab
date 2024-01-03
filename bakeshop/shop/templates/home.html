@@ -20,7 +20,7 @@
 
 
                     {% if products %}
-                    {% for product in products %}
+                    {% for product in page %}
                         {% if product.is_sale %}
                         <div class="col mb-5">
                             <div class="card h-100">
@@ -98,5 +98,8 @@
                 </div>
             </div>
         </section>
+        <div>
+            {% include 'includes/pagination.html'%}
+        </div>
 
 {% endblock %}

@@ -6,17 +6,20 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
-#Import Pagination Stuff
-#from django.core.paginator import Paginator
+from django.core.paginator import Paginator
 
 def category(request, pk):
-	try:	
-		category = Category.objects.get(id=pk)
-		product = Product.objects.get(category=category)
-		return render(request, 'category.html', {'category':category, 'product':product})
-	except:
-		messages.success(request, ('That category doesn\'t exist'))
-		return redirect('home')
+	category = Category.objects.all()
+	category_name = Category.objects.filter(id=pk).first()
+	category_id = Category.objects.get(id=pk)
+	products = Product.objects.filter(category=category_id)
+
+    # categ_paginated = Paginator(Category.objects.all(), 3)
+    # page_number = request.GET.get('page')
+    # page = category_paginated.get_page(page_number)
+    # nums = "a" * page.paginator.num_pages
+
+	return render(request, 'category.html', {'category':category, 'category_name':category_name, 'products':products})
 		
 def product(request, pk):
 	category = Category.objects.all()
@@ -26,7 +29,14 @@ def product(request, pk):
 def home(request): 
     category = Category.objects.all()
     products = Product.objects.all()
-    return render(request, 'home.html', {'category':category,'products': products})
+
+    products_paginated = Paginator(Product.objects.all(), 3)
+    page_number = request.GET.get('page')
+    page = products_paginated.get_page(page_number)
+    nums = "a" * page.paginator.num_pages
+
+
+    return render(request, 'home.html', {'products': products, 'category':category, 'page': page, 'nums': nums})
 
 
 def about(request):

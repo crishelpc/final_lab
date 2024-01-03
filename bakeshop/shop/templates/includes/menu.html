@@ -21,9 +21,13 @@
                         <li><a class="dropdown-item" href="{% url 'home' %}">All Products</a></li>
                         <li><hr class="dropdown-divider" /></li>
 
-                        {% for item in category %} 
-                        <li><a class="dropdown-item" href="category/{{ item.id }}">{{ item }}</a></li>
-                        {% endfor %}
+                    {% for item in category %} 
+                        {% if request.path == '/category/' %}
+                            <li><a class="dropdown-item" href="{{ item.id }}">{{ item }}</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'category' item.id %}">{{ item }}</a></li>
+                        {% endif %} 
+                    {% endfor %}
                     </ul>
                 </li>
             </ul>
