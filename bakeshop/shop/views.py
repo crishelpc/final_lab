@@ -6,36 +6,32 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
+#Import Pagination Stuff
+#from django.core.paginator import Paginator
 
-
-
-def category(request, foo): 
-    #Replace hyphens with spaces
-    foo = foo.replace('-', ' ')
-    #grab the category from the URL 
-    try:
-        #Look up the category
-        category = Category.objects.get(name=foo)
-        products = Product.objects.filter(category=category)
-        return render(request, 'category.html', {'products': products, 'category': category})
-
-    except: 
-        messages.success(request, ("That ategory doesn't Exist"))
-        return redirect('home')
-
-
-def product(request, pk): 
-    product = Product.objects.get(id=pk)
-    return render(request, 'product.html', {'product': product})
-
+def category(request, pk):
+	try:	
+		category = Category.objects.get(id=pk)
+		product = Product.objects.get(category=category)
+		return render(request, 'category.html', {'category':category, 'product':product})
+	except:
+		messages.success(request, ('That category doesn\'t exist'))
+		return redirect('home')
+		
+def product(request, pk):
+	category = Category.objects.all()
+	product = Product.objects.get(id=pk)
+	return render(request, 'product.html', {'category':category, 'product':product})
 
 def home(request): 
+    category = Category.objects.all()
     products = Product.objects.all()
-    return render(request, 'home.html', {'products': products})
+    return render(request, 'home.html', {'category':category,'products': products})
 
 
-def about(request): 
-    return render(request, 'about.html', {})
+def about(request):
+	category = Category.objects.all()
+	return render(request, 'about.html', {'category':category})
 
 
 def login_user(request): 
@@ -83,3 +79,6 @@ def register_user(request):
     else:
         
      return render(request, 'register.html', {'form': form})
+
+def order(request):
+    pass

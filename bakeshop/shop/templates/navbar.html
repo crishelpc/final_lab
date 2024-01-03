@@ -21,10 +21,9 @@
                         <li><a class="dropdown-item" href="{% url 'home' %}">All Products</a></li>
                         <li><hr class="dropdown-divider" /></li>
 
-                        <!-- {% for category in categories %} 
-                        {% endfor %} -->
-                        <li><a class="dropdown-item" href="{% url 'category' 'Breads' %}">Breads</a></li> 
-                        <li><a class="dropdown-item" href="{% url 'category' 'Pizza' %}">Pizza</a></li> 
+                        {% for item in category %} 
+                        <li><a class="dropdown-item" href="category/{{ item.id }}">{{ item }}</a></li>
+                        {% endfor %}
                     </ul>
                 </li>
             </ul>

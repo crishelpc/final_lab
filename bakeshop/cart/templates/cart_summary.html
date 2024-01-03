@@ -12,6 +12,7 @@
             </div>
         </header>       
         <br/>
+    
         <div class="container">
             {% if cart_products %}
             {% for product in cart_products %}
@@ -90,6 +91,10 @@
             <br/><br/> <br/><br/>  
             {% endif %}
         </div>
+        <td colspan="5">
+            <a class='btn btn-warning float-right ml-2' href='/order/'>Proceed to checkout</a>
+            <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
+        </td>
 
 <script>
 //UPDATE CART
