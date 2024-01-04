@@ -7,20 +7,46 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
 from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
+from .forms import CategoryForm
+
+
+def edit_category(request):
+    category = Category.objects.get(pk=id)
+    return render(request, 'edit_category.html', {'category': category})
+
+
+def add_category(request):
+    submitted = False 
+
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('add_category?submitted=True')
+    else: 
+        form = CategoryForm 
+    
+    if 'submitted' in request.GET: 
+        submitted =True
+
+    return render(request, 'add_category.html', {'form': form, 'submitted': submitted})
 
 def category(request, pk):
-	category = Category.objects.all()
-	category_name = Category.objects.filter(id=pk).first()
-	category_id = Category.objects.get(id=pk)
-	products = Product.objects.filter(category=category_id)
+    
+    category = Category.objects.all()
+    category_name = Category.objects.filter(id=pk).first()
+    category_id = Category.objects.get(id=pk)
+    products = Product.objects.filter(category=category_id)
 
-    # categ_paginated = Paginator(Category.objects.all(), 3)
-    # page_number = request.GET.get('page')
-    # page = category_paginated.get_page(page_number)
-    # nums = "a" * page.paginator.num_pages
+    category_paginated = Paginator(Category.objects.all(), 3)
+    page_number = request.GET.get('page')
+    page = category_paginated.get_page(page_number)
+    nums = "a" * page.paginator.num_pages
 
-	return render(request, 'category.html', {'category':category, 'category_name':category_name, 'products':products})
-		
+    return render(request, 'category.html', {'category':category, 'category_name':category_name, 'products':products, 'page': page , 'nums': nums})
+
+
 def product(request, pk):
 	category = Category.objects.all()
 	product = Product.objects.get(id=pk)
@@ -35,13 +61,18 @@ def home(request):
     page = products_paginated.get_page(page_number)
     nums = "a" * page.paginator.num_pages
 
-
     return render(request, 'home.html', {'products': products, 'category':category, 'page': page, 'nums': nums})
 
 
 def about(request):
-	category = Category.objects.all()
-	return render(request, 'about.html', {'category':category})
+    category = Category.objects.all()
+
+    about_paginated = Paginator(Category.objects.all(), 5)
+    page_number = request.GET.get('page')
+    page = about_paginated.get_page(page_number)
+    nums = "a" * page.paginator.num_pages
+
+    return render(request, 'about.html', {'category':category, 'nums': nums})
 
 
 def login_user(request): 

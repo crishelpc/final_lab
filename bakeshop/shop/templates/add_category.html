@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<br/><br/><br/><br/>
+<center>
+<h1>Add Category</h1></center>
+<br/><br/>
+{% if submitted %}
+    Submitted Successfully!!!
+
+    {% else %}
+
+    <form action="" method=POST>
+        {% csrf_token %}
+
+        {{ form.as_p}}
+    
+        <input type="submit" value="Submit" class="btn btn-secondary">
+    </form>
+
+{% endif %}
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+{% endblock %}
