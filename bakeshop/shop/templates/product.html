@@ -52,7 +52,14 @@
               <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
               <button type="button" value="{{ product.id }}" 
               class="btn btn-secondary" id="add-cart">Add To Cart</button>
-         </center>
+              <center>
+                <td>
+                <br/>
+                <a href ="{{ product.id }}/edit_product" class="btn btn-outline-secondary btn-sm">Update</a>
+                <a href ="{{ product.id }}/del_product" class="btn btn-outline-danger btn-sm">Delete</a>
+            </td>
+        </center>
+      </center>
         </div>
       </div>
      </div>

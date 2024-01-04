@@ -14,11 +14,14 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">login</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
             {% endif %}
-            
+                
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{% url 'home' %}">All Products</a></li>
+                        
+                        <li class="nav-item"><a class="nav-link" href="{% url 'add_product' %}">Add Products</a></li>
                         <li><hr class="dropdown-divider" /></li>
 
                     {% for item in category %} 
@@ -29,7 +32,6 @@
                         {% endif %} 
                     {% endfor %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'add_category' %}">Add Category</a></li>
-                    
 
                     </ul>
                 </li>

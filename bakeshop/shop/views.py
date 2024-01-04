@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -7,14 +7,66 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect
-from .forms import CategoryForm
+from django.http import HttpResponseRedirect, Http404
+from .forms import CategoryForm, ProductForm
+from django.urls import reverse
+
+def del_product(request, pk):
+    product_name = Product.objects.get(pk=pk)
+    product_name.delete()
+    return  HttpResponseRedirect(reverse('home'))
+
+def edit_product(request, pk):
+    try:
+        product = Product.objects.all()
+        product_name = Product.objects.get(id=pk)
+    except Product.DoesNotExist:
+        raise Http404("Product does not exist")
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product_name)
+        if form.is_valid():
+            form.save()
+            return redirect('product', pk=pk)
+    else:
+        form = ProductForm(instance=product_name)
+
+    return render(request, 'edit_product.html', {'product': product, 'product_name': product_name, 'form': form})
 
 
-def edit_category(request):
-    category = Category.objects.get(pk=id)
-    return render(request, 'edit_category.html', {'category': category})
+def add_product(request):
+    submitted = False
 
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('add_product?submitted=True')
+    
+    else: 
+        form = ProductForm 
+    
+    if 'submitted' in request.GET: 
+        submitted =True
+
+    return render(request, 'add_product.html', {'form': form, 'submitted': submitted})
+
+
+def del_category(request, pk):
+    category_name = Category.objects.get(pk=pk)
+    category_name.delete()
+    return  HttpResponseRedirect(reverse('home'))
+    
+
+def edit_category(request, pk):
+    category = Category.objects.all()
+    category_name = Category.objects.filter(id=pk).first()
+    form = CategoryForm(request.POST or None, instance=category_name)
+    if form.is_valid():
+        form.save()
+        redirect('category', pk=pk)
+
+    return render(request, 'edit_category.html', {'category':category, 'category_name':category_name, 'form': form})
 
 def add_category(request):
     submitted = False 

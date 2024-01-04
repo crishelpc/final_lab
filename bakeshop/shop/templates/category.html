@@ -10,7 +10,22 @@
                     <p class="lead fw-normal text-white-50 mb-0">Category Page</p>
                 </div>
             </div>
+            
+            <center>
+                <td>
+                <br/>
+                <a href ="{{ category_name.id}}/edit_category" class="btn btn-outline-secondary btn-sm">Update</a>
+            </td>
+        </center>
+
+            <center>
+                <td>
+                <br/>
+                 <a href ="{{ category_name.id}}/del_category" class="btn btn-outline-danger btn-sm">Delete</a>
+                </td>
+            </center>
         </header>
+
         
         <!-- Section-->
         <section class="py-5">
@@ -58,7 +73,6 @@
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product' product.id %}">View Product</a> 
-                                   
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +92,7 @@
                                    
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">{{ product.name }}</h5>
-                                    
+                            
                                     <!-- Product price-->
                                     ₱{{ product.price }}
                                     <br/>
@@ -89,6 +103,7 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product' product.id %}">View Product</a>
+                                 
                                 </div>
                             </div>
                         </div>

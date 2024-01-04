@@ -2,7 +2,37 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.forms import ModelForm
-from .models import Category
+from .models import Category, Product, Order
+
+
+class ProductForm(ModelForm):
+	class Meta:
+		model = Product
+		fields = ('name', 'price', 'category', 'description', 'image', 'is_sale', 'sale_price',)
+		labels = {
+			'name': '',
+			'price': 'Product_Price',
+			'category': '',
+			'description': '',
+			'image': '',
+			'is_sale': '',
+			'sale_price': 'Sale_Price',
+		}
+		widgets = {
+			'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Name'}),
+			'price': forms.NumberInput(attrs={'class': 'form-control'}),
+			'category': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Product Category'}),
+			'description':forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Product Description'}),
+			'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+			'is_sale': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+			'sale_price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Sale Price'}),
+		} 
+	is_sale = forms.BooleanField(
+    	required=False,  
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        label='Product Is on Sale',
+        initial=False,  
+    )
 
 
 class CategoryForm(ModelForm):
