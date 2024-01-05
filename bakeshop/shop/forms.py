@@ -4,6 +4,9 @@ from django import forms
 from django.forms import ModelForm
 from .models import Category, Product, Order, Customer
 
+INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border '
+
+
 class CustomerForm(ModelForm):
 	class Meta:
 		model = Customer

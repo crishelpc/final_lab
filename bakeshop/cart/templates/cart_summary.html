@@ -87,7 +87,8 @@
                 Total: ₱{{ totals }}</h3>
             <br/>
             <center>
-            <button type="button" class="btn btn-secondary order_form">Place Order</button>
+                <a class="btn btn-primary" href="{% url 'Orders' %}" role="button"> Place Order</a>
+            {% comment %} <button type="button" class="btn btn-secondary order_form">Place Order</button> {% endcomment %}
             </center>
             <br/><br/>
             {% else %}
