@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Category
+from .models import Product, Category, Customer, Order
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -7,9 +7,12 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect, Http404
-from .forms import CategoryForm, ProductForm
+from django.http import HttpResponseRedirect, Http404, HttpResponseNotFound
+from .forms import CategoryForm, ProductForm, OrderForm
 from django.urls import reverse
+
+
+
 
 def del_product(request, pk):
     product_name = Product.objects.get(pk=pk)
@@ -173,5 +176,21 @@ def register_user(request):
         
      return render(request, 'register.html', {'form': form})
 
-def order(request):
-    pass
+
+def create_order(request):
+    submitted = False
+
+    if request.method == 'POST':
+        form = OrderForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('create_order?submitted=True')
+    
+    else: 
+        form = OrderForm 
+    
+    if 'submitted' in request.GET: 
+        submitted =True
+
+    return render(request, 'create_order.html', {'form': form, 'submitted': submitted})
+

@@ -2,8 +2,55 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.forms import ModelForm
-from .models import Category, Product, Order
+from .models import Category, Product, Order, Customer
 
+class CustomerForm(ModelForm):
+	class Meta:
+		model = Customer
+		fields = ('first_name', 'last_name', 'phone', 'email', 'password',)
+		labels = {
+			'first_name': '',
+			'last_name': '',
+			'phone': '',
+			'email': '',
+			'password': '',
+		}
+		widgets = {
+			'first_name':forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
+			'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last_Name'}),
+			'phone': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Phone_Number'}),
+			'email': forms.EmailInput(attrs={'class': 'form-control', 'placeolder': 'Email'}),
+			'password': forms.HiddenInput(),
+		}
+
+
+class OrderForm(ModelForm): 
+	class Meta: 
+		model = Order
+		fields = ('product', 'customer', 'quantity', 'address', 'phone', 'wishlist',)
+		labels = {
+			'product': '',
+			'customer': '',
+			'quantity':'', 
+			'address': '',
+			'phone': '',
+			'wishlist': '',
+		}
+		widgets = {
+			'product': forms.Select(attrs={'class': 'form-control'}),
+			'customer': forms.HiddenInput(),
+			'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+			'address': forms.TextInput(attrs={'class': 'form-control'}),
+			'phone' : forms.TextInput(attrs={'class': 'form-control'}),
+			'wishlist': forms.CheckboxSelectMultiple(),
+		}
+
+	def __init__(self, customer=None, *args, **kwargs):
+		super(OrderForm, self).__init__(*args, **kwargs)
+		if customer:
+			self.fields['product'].queryset = Product.objects.filter(category__in=customer.categories.all())
+			self.fields['wishlist'].queryset = customer.wishlist.all() 
+		
 
 class ProductForm(ModelForm):
 	class Meta:

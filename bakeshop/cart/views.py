@@ -3,6 +3,7 @@ from .cart import Cart
 from shop.models import Product
 from django.http import JsonResponse
 
+
 def cart_summary(request): 
     #Get the cart
     cart = Cart(request)
@@ -60,3 +61,6 @@ def cart_update(request):
         response = JsonResponse({'qty': product_qty})
         return response
         # return redirect('cart_summary')
+
+def order_form(request):
+    pass

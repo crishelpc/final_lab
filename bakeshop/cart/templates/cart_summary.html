@@ -79,22 +79,28 @@
                 </div>
               </div>
              </div>
-            </div><br/>
-
-
+            </div>
+   
             {% endfor %}
-            <h3>Total:  ₱{{ totals }} </h3>
+
+            <h3 style="text-align: right; border: 1px solid black; padding: 10px">
+                Total: ₱{{ totals }}</h3>
+            <br/>
+            <center>
+            <button type="button" class="btn btn-secondary order_form">Place Order</button>
+            </center>
+            <br/><br/>
             {% else %}
+
+            <center>
             There's Nothing In Your Cart...
+            </center>
             <br/><br/> <br/><br/><br/> <br/> 
             <br/><br/> <br/><br/><br/> <br/> 
             <br/><br/> <br/><br/>  
             {% endif %}
         </div>
-        <!-- <td colspan="5">
-            <a class='btn btn-warning float-right ml-2' href='/order/'>Proceed to checkout</a>
-            <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
-        </td> -->
+       
 
 <script>
 //UPDATE CART

@@ -29,6 +29,8 @@ class Customer(BaseModel):
     def __str__(self): 
         return(f"{self.first_name} {self.last_name}")
 
+
+
 class Product(BaseModel): 
     name = models.CharField(max_length=100)
     price = models.DecimalField(default=0, decimal_places=2, max_digits=6)
@@ -41,13 +43,21 @@ class Product(BaseModel):
 
     def __str__(self): 
         return self.name
-    
+
+class Wishlist(BaseModel):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.customer} - {self.product}"
+
 class Order(BaseModel): 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     address = models.CharField(max_length=100, default='', blank=True)
     phone = models.CharField(max_length=12, default='', blank=True)
+    wishlist = models.ManyToManyField(Product, related_name='wishlist_orders', blank=True)
 
     def __str__(self): 
         return(f"{self.product}")
