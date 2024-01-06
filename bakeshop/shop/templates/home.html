@@ -17,7 +17,7 @@
             <div class="container px-4 px-lg-5 mt-5">
 
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
+                    
 
                     {% if products %}
                     {% for product in page %}
@@ -37,7 +37,14 @@
                                        
                                         <!-- Product name-->
                                         <h5 class="fw-bolder">{{ product.name }}</h5>
-                                        
+
+                                        <p><b>
+                                            Meal Type: <br/>
+                                                {% for mealtype in product.meal_type.all %}
+                                                    {{ mealtype }}{% if not forloop.last %}, {% endif %}
+                                                {% endfor %}</b>
+                                            </p>
+                                       
                                         <!--Sale-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
                                             <div class="bi-star-fill"></div>
@@ -52,7 +59,7 @@
                                         ₱{{ product.sale_price }}
                                         <br/>
                                         {{ product.description }}
-                                    </div>
+                                   </div>
                                 </div>
                                 
                                 <!-- Product actions-->
@@ -77,6 +84,7 @@
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">{{ product.name }}</h5>
                                     
+                                   
                                     <!-- Product price-->
                                     ₱{{ product.price }}
                                     <br/>
@@ -93,6 +101,7 @@
                     {% endif %}
                     {% endfor %}
                     {% endif %}
+                   
                    
 
                 </div>

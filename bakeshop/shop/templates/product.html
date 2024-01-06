@@ -12,8 +12,15 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
+
               <center>
               <h5 class="card-title">{{ product.name }}</h5>
+                <p><b>
+                  Meal Type: <br/>
+                      {% for mealtype in product.meal_type.all %}
+                          {{ mealtype }}{% if not forloop.last %}, {% endif %}
+                      {% endfor %}</b>
+                  </p>
               <br/>
               <p class="card-text justified">{{ product.description }}</p>
 
@@ -47,6 +54,7 @@
               <br/>
               <button type="button" value="{{ product.id }}" 
               class="btn btn-secondary" id="add-cart">Add To Cart</button>
+
               <center>
                 <td>
                 <br/>

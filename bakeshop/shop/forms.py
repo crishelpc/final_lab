@@ -45,7 +45,7 @@ class ProductForm(ModelForm):
 			'category': forms.Select(),
 			'description':forms.Textarea(),
 			'image': forms.ClearableFileInput(),
-			'meal_type': forms.CheckboxSelectMultiple(),
+			'meal_type': forms.SelectMultiple(),
 			'is_sale': forms.CheckboxInput(),
 			'sale_price': forms.NumberInput(),
 		} 

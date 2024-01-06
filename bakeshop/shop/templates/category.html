@@ -52,7 +52,12 @@
                                        
                                         <!-- Product name-->
                                         <h5 class="fw-bolder">{{ product.name }}</h5>
-                                        
+                                        <p><b>
+                                            Meal Type: <br/>
+                                                {% for mealtype in product.meal_type.all %}
+                                                    {{ mealtype }}{% if not forloop.last %}, {% endif %}
+                                                {% endfor %}</b>
+                                            </p>
                                         <!--Sale-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
                                             <div class="bi-star-fill"></div>
@@ -85,6 +90,8 @@
 
                             <!-- Product image-->
                             <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+
+
                             
                             <!-- Product details-->
                             <div class="card-body p-4">
@@ -92,7 +99,8 @@
                                    
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">{{ product.name }}</h5>
-                            
+                                    
+                                    
                                     <!-- Product price-->
                                     ₱{{ product.price }}
                                     <br/>
