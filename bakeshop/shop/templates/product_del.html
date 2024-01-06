@@ -9,18 +9,17 @@
     <center>
         <td>
             <br/>
-    
-                <form action="" method=POST enctype="multipart/form-data">
-                    {% csrf_token %}
-            
-                    {{ form.as_p}}
-                
-                    <input type="submit" value="Delete" class="btn btn-danger">
-                </form>
+            <form action="" method=POST enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-row ">
+                    <p>Delete "{{ product_del.name }}"?</p>
+                </div>
+                <br>
+                <input type="submit" value="Delete" class="btn btn-danger">
+            </form>
         </td>
 </center>
      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    
 </center>
 
 {% endblock %}

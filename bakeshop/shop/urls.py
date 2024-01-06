@@ -9,7 +9,7 @@ urlpatterns = [
     path('login/', views.login_user, name='login'), 
     path('logout/', views.logout_user, name='logout'),
     path('register/', views.register_user, name='register'),
-    path('order/', views.create_order, name='Orders'),
+    path('meal_type/<int:pk>', views.meal_type, name='meal_type'),
 
     #PRODUCT
     path('product/<int:pk>', views.product, name='product'),
@@ -17,12 +17,9 @@ urlpatterns = [
     path('product/<pk>/edit_product', views.edit_product, name='edit_product'),
     path('product/<pk>/del_product', views.del_product, name='del_product'),
 
-
-
     #CATEGORY
     path('category/<int:pk>', views.category, name='category'),
     path('category/add_category', views.add_category, name='add_category'),
     path('category/<pk>/edit_category', views.edit_category, name='edit_category'),
     path('category/<pk>/del_category', views.del_category, name="del_category"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    

@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.forms import ModelForm
-from .models import Category, Product, Order, Customer
+from .models import Category, Product, Customer, MealType
 
 INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border '
 
@@ -24,50 +24,33 @@ class CustomerForm(ModelForm):
 			'phone': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Phone_Number'}),
 			'email': forms.EmailInput(attrs={'class': 'form-control', 'placeolder': 'Email'}),
 			'password': forms.HiddenInput(),
+		}	
+
+
+class MealTypeForm(ModelForm):
+	class Meta: 
+		fields = ('name',)
+		labels = {
+			'name',
+		}
+		widgets = {
+			'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Meal Type'}),
 		}
 
 
-class OrderForm(ModelForm):
-    class Meta:
-        model = Order
-        fields = ('product', 'customer', 'quantity', 'address', 'phone', 'wishlist',)
-        labels = {
-            'product': '',
-            'customer': 'Name',
-            'quantity': '',
-            'address': 'Address',
-            'phone': 'Phone Number',
-            'wishlist': 'Wishlist Products',
-        }
-        widgets = {
-            'product': forms.Select(attrs={'class': 'form-control'}),
-            'customer': forms.TextInput(attrs={'class': 'form-control'}),
-            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
-            'address': forms.TextInput(attrs={'class': 'form-control'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control'}),
-            'wishlist': forms.CheckboxSelectMultiple(),
-        }
 
-    def __init__(self, *args, **kwargs):
-        customer = kwargs.pop('customer', None)
-        super(OrderForm, self).__init__(*args, **kwargs)
-        if customer:
-            if hasattr(Product, 'categories'):
-                self.fields['product'].queryset = Product.objects.filter(categories__in=customer.categories.all())
-            if hasattr(Order, 'wishlist'): 
-                self.fields['wishlist'].queryset = customer.wishlist.all()
-		
 
 class ProductForm(ModelForm):
 	class Meta:
 		model = Product
-		fields = ('name', 'price', 'category', 'description', 'image', 'is_sale', 'sale_price',)
+		fields = ('name', 'price', 'category', 'description', 'image', 'meal_type', 'is_sale', 'sale_price',)
 		labels = {
 			'name': '',
 			'price': 'Product Price',
 			'category': '',
 			'description': '',
 			'image': '',
+			'meal_type': '',
 			'is_sale': '',
 			'sale_price': 'Sale Price',
 		}
@@ -77,6 +60,7 @@ class ProductForm(ModelForm):
 			'category': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Product Category'}),
 			'description':forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Product Description'}),
 			'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+			'meal_type': forms.CheckboxSelectMultiple(attrs={'class': 'form-control', 'placeholder': 'Product Meal Type'}),
 			'is_sale': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
 			'sale_price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Sale Price'}),
 		} 
@@ -86,7 +70,6 @@ class ProductForm(ModelForm):
         label='Product Is on Sale',
         initial=False,  
     )
-
 
 class CategoryForm(ModelForm):
 	class Meta:
@@ -98,7 +81,6 @@ class CategoryForm(ModelForm):
 		widgets = {
 			'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Category_Name'}),
 		}
-
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))

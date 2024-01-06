@@ -62,5 +62,3 @@ def cart_update(request):
         return response
         # return redirect('cart_summary')
 
-def order_form(request):
-    pass
