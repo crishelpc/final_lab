@@ -25,7 +25,12 @@
                             <div class="card-body">
                                 <center>
                                     <h5 class="card-title">{{ product.name }}</h5>
-                                    <br/>
+                                    <p><b>
+                                        Meal Type: <br/>
+                                            {% for mealtype in product.meal_type.all %}
+                                                {{ mealtype }}{% if not forloop.last %}, {% endif %}
+                                            {% endfor %}</b>
+                                        </p>
                                     <p class="card-text justified">{{ product.description }}</p>
                                     {% if product.is_sale %}
                                         <div class="d-flex justify-content-center small text-warning mb-2">
