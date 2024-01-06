@@ -2,10 +2,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.forms import ModelForm
-from .models import Category, Product, Customer, MealType
+from .models import Category, Product, Customer
 
 INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border '
-
 
 class CustomerForm(ModelForm):
 	class Meta:
@@ -19,54 +18,40 @@ class CustomerForm(ModelForm):
 			'password': '',
 		}
 		widgets = {
-			'first_name':forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
-			'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last_Name'}),
-			'phone': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Phone_Number'}),
-			'email': forms.EmailInput(attrs={'class': 'form-control', 'placeolder': 'Email'}),
+			'first_name':forms.TextInput(),
+			'last_name': forms.TextInput(),
+			'phone': forms.NumberInput(),
+			'email': forms.EmailInput(),
 			'password': forms.HiddenInput(),
 		}	
-
-
-class MealTypeForm(ModelForm):
-	class Meta: 
-		fields = ('name',)
-		labels = {
-			'name',
-		}
-		widgets = {
-			'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Meal Type'}),
-		}
-
-
-
 
 class ProductForm(ModelForm):
 	class Meta:
 		model = Product
 		fields = ('name', 'price', 'category', 'description', 'image', 'meal_type', 'is_sale', 'sale_price',)
 		labels = {
-			'name': '',
-			'price': 'Product Price',
-			'category': '',
-			'description': '',
-			'image': '',
-			'meal_type': '',
-			'is_sale': '',
+			'name': 'Product Name',
+			'price': 'Price',
+			'category': 'Category',
+			'description': 'Description',
+			'image': 'Product Image',
+			'meal_type': 'Meal Type',
+			'is_sale': 'Sale',
 			'sale_price': 'Sale Price',
 		}
 		widgets = {
-			'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Name'}),
-			'price': forms.NumberInput(attrs={'class': 'form-control'}),
-			'category': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Product Category'}),
-			'description':forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Product Description'}),
-			'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
-			'meal_type': forms.CheckboxSelectMultiple(attrs={'class': 'form-control', 'placeholder': 'Product Meal Type'}),
-			'is_sale': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-			'sale_price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Sale Price'}),
+			'name': forms.TextInput(),
+			'price': forms.NumberInput(),
+			'category': forms.Select(),
+			'description':forms.Textarea(),
+			'image': forms.ClearableFileInput(),
+			'meal_type': forms.CheckboxSelectMultiple(),
+			'is_sale': forms.CheckboxInput(),
+			'sale_price': forms.NumberInput(),
 		} 
 	is_sale = forms.BooleanField(
     	required=False,  
-        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        widget=forms.CheckboxInput(),
         label='Product Is on Sale',
         initial=False,  
     )
@@ -79,11 +64,11 @@ class CategoryForm(ModelForm):
 		'name': '',
 		}
 		widgets = {
-			'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Category_Name'}),
+			'name': forms.TextInput(),
 		}
 
 class SignUpForm(UserCreationForm):
-	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
+	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email'}))
 	first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
 	last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
 

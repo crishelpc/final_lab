@@ -1,25 +1,68 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    /* crud */
+    .crud-container {
+        max-width: 500px;
+        margin: 3rem 0;
+        padding: 1.5rem;
+        border-radius: 10px;
+        background-color: white;
+    }
 
+    .crud-container form {
+        margin-top: 20px;
+    }
+
+    .crud-container h1 {
+        color: #333;
+    }
+
+    .crud-container .btn {
+        padding: 10px 20px;
+        text-decoration: none;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    .crud-container form input[type="text"],
+    .crud-container form input[type="number"],
+    .crud-container form textarea,
+    .crud-container form select {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    .crud-container form textarea {
+        height: 110px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+    }
+</style>
 <center>
-    <br/><br/>
-    <h1>Delete Product</h1>
-    <br/>
-    <center>
-        <td>
-            <br/>
-            <form action="" method=POST enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-row ">
-                    <p>Delete "{{ product_del.name }}"?</p>
-                </div>
-                <br>
-                <input type="submit" value="Delete" class="btn btn-danger">
-            </form>
-        </td>
+    <div class="crud-container">
+        <h1>Delete Product</h1>
+        <form action="" method=POST enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>Delete "{{ product_del.name }}"?</p>
+            <br>
+            <input type="submit" value="Delete" class="btn btn-danger">
+        </form>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br>
 </center>
-     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-</center>
-
 {% endblock %}

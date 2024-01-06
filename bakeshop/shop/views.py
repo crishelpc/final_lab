@@ -5,8 +5,7 @@ from django.contrib import messages
 from .forms import SignUpForm
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, Http404
-from .forms import CategoryForm, ProductForm, MealTypeForm
-from django.urls import reverse
+from .forms import CategoryForm, ProductForm
 
 def home(request): 
     category = Category.objects.all()
@@ -36,6 +35,7 @@ def product(request, pk):
 	return render(request, 'product.html', {'category':category, 'product':product})
 
 def add_product(request):
+    category = Category.objects.all()
     submitted = False
 
     if request.method == 'POST':
@@ -50,9 +50,10 @@ def add_product(request):
     if 'submitted' in request.GET: 
         submitted =True
 
-    return render(request, 'product_add.html', {'form': form, 'submitted': submitted})
+    return render(request, 'product_add.html', {'category':category, 'form': form, 'submitted': submitted})
 
 def edit_product(request, pk):
+    category = Category.objects.all()
     try:
         product = Product.objects.all()
         product_name = Product.objects.get(id=pk)
@@ -67,7 +68,7 @@ def edit_product(request, pk):
     else:
         form = ProductForm(instance=product_name)
 
-    return render(request, 'product_edit.html', {'product': product, 'product_name': product_name, 'form': form})
+    return render(request, 'product_edit.html', {'category':category, 'product': product, 'product_name': product_name, 'form': form})
 
 def del_product(request, pk):
     category = Category.objects.all()
@@ -78,14 +79,6 @@ def del_product(request, pk):
         return redirect('home')
 
     return render(request, 'product_del.html', {'category':category, 'product_del': product_del})
-
-#MEAL TYPE
-def meal_type(request, pk):
-    mealtype = get_object_or_404(MealType, id=pk)
-    
-    associated_products = Product.objects.filter(meal_type=mealtype)
-
-    return render(request, 'meal_type.html', {'mealtype': mealtype, 'associated_products': associated_products})
 
 # CATEGORY
 def category(request, pk): 
@@ -102,6 +95,7 @@ def category(request, pk):
     return render(request, 'category.html', {'category':category, 'category_name':category_name, 'products':products, 'page': page , 'nums': nums})
 
 def add_category(request):
+    category = Category.objects.all()
     submitted = False 
 
     if request.method == 'POST':
@@ -115,7 +109,7 @@ def add_category(request):
     if 'submitted' in request.GET: 
         submitted =True
 
-    return render(request, 'category_add.html', {'form': form, 'submitted': submitted})
+    return render(request, 'category_add.html', {'category':category, 'form': form, 'submitted': submitted})
 
 def edit_category(request, pk):
     category = Category.objects.all()
