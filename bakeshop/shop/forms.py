@@ -27,32 +27,35 @@ class CustomerForm(ModelForm):
 		}
 
 
-class OrderForm(ModelForm): 
-	class Meta: 
-		model = Order
-		fields = ('product', 'customer', 'quantity', 'address', 'phone', 'wishlist',)
-		labels = {
-			'product': '',
-			'customer': '',
-			'quantity':'', 
-			'address': '',
-			'phone': '',
-			'wishlist': '',
-		}
-		widgets = {
-			'product': forms.Select(attrs={'class': 'form-control'}),
-			'customer': forms.HiddenInput(),
-			'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
-			'address': forms.TextInput(attrs={'class': 'form-control'}),
-			'phone' : forms.TextInput(attrs={'class': 'form-control'}),
-			'wishlist': forms.CheckboxSelectMultiple(),
-		}
+class OrderForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = ('product', 'customer', 'quantity', 'address', 'phone', 'wishlist',)
+        labels = {
+            'product': '',
+            'customer': 'Name',
+            'quantity': '',
+            'address': 'Address',
+            'phone': 'Phone Number',
+            'wishlist': 'Wishlist Products',
+        }
+        widgets = {
+            'product': forms.Select(attrs={'class': 'form-control'}),
+            'customer': forms.TextInput(attrs={'class': 'form-control'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'wishlist': forms.CheckboxSelectMultiple(),
+        }
 
-	def __init__(self, customer=None, *args, **kwargs):
-		super(OrderForm, self).__init__(*args, **kwargs)
-		if customer:
-			self.fields['product'].queryset = Product.objects.filter(category__in=customer.categories.all())
-			self.fields['wishlist'].queryset = customer.wishlist.all() 
+    def __init__(self, *args, **kwargs):
+        customer = kwargs.pop('customer', None)
+        super(OrderForm, self).__init__(*args, **kwargs)
+        if customer:
+            if hasattr(Product, 'categories'):
+                self.fields['product'].queryset = Product.objects.filter(categories__in=customer.categories.all())
+            if hasattr(Order, 'wishlist'): 
+                self.fields['wishlist'].queryset = customer.wishlist.all()
 		
 
 class ProductForm(ModelForm):
@@ -61,12 +64,12 @@ class ProductForm(ModelForm):
 		fields = ('name', 'price', 'category', 'description', 'image', 'is_sale', 'sale_price',)
 		labels = {
 			'name': '',
-			'price': 'Product_Price',
+			'price': 'Product Price',
 			'category': '',
 			'description': '',
 			'image': '',
 			'is_sale': '',
-			'sale_price': 'Sale_Price',
+			'sale_price': 'Sale Price',
 		}
 		widgets = {
 			'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Name'}),

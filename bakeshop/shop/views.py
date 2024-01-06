@@ -179,18 +179,18 @@ def register_user(request):
 
 def create_order(request):
     submitted = False
+    customer = get_object_or_404(Customer, id=request.user.id)
 
     if request.method == 'POST':
-        form = OrderForm(request.POST, request.FILES)
+        form = OrderForm(customer=customer, data=request.POST)
+        
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('create_order?submitted=True')
-    
-    else: 
-        form = OrderForm 
-    
-    if 'submitted' in request.GET: 
-        submitted =True
+    else:
+        form = OrderForm()
 
-    return render(request, 'create_order.html', {'form': form, 'submitted': submitted})
+    if 'submitted' in request.GET:
+        submitted = True 
 
+    return render(request, 'order_form.html', {'form': form, 'submitted': submitted})
