@@ -52,12 +52,7 @@
                                        
                                         <!-- Product name-->
                                         <h5 class="fw-bolder">{{ product.name }}</h5>
-                                        <p><b>
-                                            Meal Type: <br/>
-                                                {% for mealtype in product.meal_type.all %}
-                                                    {{ mealtype }}{% if not forloop.last %}, {% endif %}
-                                                {% endfor %}</b>
-                                            </p>
+                                     
                                         <!--Sale-->
                                         <div class="d-flex justify-content-center small text-warning mb-2">
                                             <div class="bi-star-fill"></div>
